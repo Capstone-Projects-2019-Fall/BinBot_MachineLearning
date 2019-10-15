@@ -1,21 +1,74 @@
-import argparse
-from src.trainConvnet import TrainConvnet
-from src.freezeModel import  FreezeModel
+import sys
+from os import path
+from trainConvnet import TrainConvnet
+from freezeModel import FreezeModel
 from keras import layers, models, utils
 
 
 def main():
     """Main method run at start up."""
-    print("Main function called.")
+
+    args = parse_args(sys.argv)
+    __training_path = args[0]
+    __test_path = args[1]
+    __initialize = args[2]
+
+    for arg in args:
+        print(str(arg))
 
 
-def parse_args(args):
+def parse_args(argv):
     """This method parses the command line arguments from starting the application and returns them to the main
      function.
 
-     args: the arguments passed in from the command prompt"""
-    __parser = argparse.ArgumentParser()
-    args = __parser.parse_args()
+     argv: the arguments passed in from the command prompt"""
+
+    args = ["", "", False]
+    last_arg = ""
+
+    for arg in argv:
+
+        if last_arg == "-training":
+
+            if not path.exists(arg):
+                print("Path " + arg + " does not exist. Terminating.")
+                exit()
+            else:
+                args[0] = path.abspath(arg)
+                print("Training path is " + str(args[0]))
+
+        if last_arg == "-test":
+
+            if not path.exists(arg):
+                print("Path " + arg + " does not exist. Terminating.")
+                exit()
+            else:
+                args[1] = path.abspath(arg)
+                print("Test path is " + str(args[1]))
+
+        if arg == "-init":
+            i = input("User is requesting to initialize model. Are you sure? [Type \'Yes\']: ")
+
+            if i == "Yes":
+                print("Model will be initialized.")
+                args[2] = True
+            else:
+                print("Model will not be initialized. Terminating.")
+                exit()
+
+        if arg == "-help":
+            print("BinBot Training software use:")
+            print("-training [path]: Designate the path to the training images.")
+            print("-test [path]: Designate the path to the test images.")
+            print("-init: Initialize the neural network data model before training.")
+            exit()
+
+        last_arg = arg
+
+    if not path.exists(args[0]) or not path.exists(args[1]):
+        print("Not enough valid path arguments found. Terminating.")
+        exit()
+
     return args
 
 
@@ -42,6 +95,7 @@ def train_convnet(training_path, test_path, model):
     test_path: file path to the set of test images
     model: the convnet data model"""
     __training = TrainConvnet(training_path, test_path, model)
+
 
 def export_convnet(model):
     """This method will export the model to a file by calling the FreezeModel class
