@@ -1,5 +1,7 @@
 import sys
+import os
 from os import path
+import tensorflow as tf
 from trainConvnet import TrainConvnet
 from freezeModel import FreezeModel
 from keras import layers, models, utils
@@ -15,6 +17,9 @@ def main():
 
     for arg in args:
         print(str(arg))
+
+    __model_path = path.abspath(path.dirname(path.dirname(__file__)) + "/model")
+    initialize_convent(__model_path, __initialize)
 
 
 def parse_args(argv):
@@ -72,18 +77,29 @@ def parse_args(argv):
     return args
 
 
-def initialize_convent(model_path):
+def initialize_convent(model_path, initialize):
     """This method will load the existing convnet, or initialize it if none exists
 
     model_path: the expected file path to the existing model"""
-    __file = utils.get_file(model_path)
-
     __model = models.Sequential()
     __model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)))
     __model.add(layers.MaxPooling2D((2, 2)))
     __model.add(layers.Conv2D(64, (3, 3), activation='relu'))
     __model.add(layers.MaxPooling2D((2, 2)))
     __model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+
+    if not path.exists(model_path):
+        if __name__ == '__main__':
+            os.mkdir(model_path)
+
+    model_file = "/model.ckpt"
+
+    if path.exists(model_path + model_file) and not initialize:
+        __model.load_weights(model_path + model_file)
+        print("Existing model loaded.")
+    else:
+        __model.save_weights(model_path + model_file)
+        print("New model created and saved.")
 
     return __model
 
