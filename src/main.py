@@ -14,12 +14,16 @@ def main():
     __training_path = args[0]
     __test_path = args[1]
     __initialize = args[2]
-
-    for arg in args:
-        print(str(arg))
-
+    __freeze = args[3]
     __model_path = path.abspath(path.dirname(path.dirname(__file__)) + "/model")
-    initialize_convent(__model_path, __initialize)
+    __model = initialize_convent(__model_path, __initialize)
+
+    if not __training_path == "" and not __test_path == "":
+        train_convnet(__training_path, __test_path, __model)
+
+    if __freeze:
+        if export_convnet(__model):
+            print("Model frozen successfully.")
 
 
 def parse_args(argv):
@@ -28,7 +32,7 @@ def parse_args(argv):
 
      argv: the arguments passed in from the command prompt"""
 
-    args = ["", "", False]
+    args = ["", "", False, False]
     last_arg = ""
 
     for arg in argv:
@@ -61,16 +65,20 @@ def parse_args(argv):
                 print("Model will not be initialized. Terminating.")
                 exit()
 
+        if arg == "-freeze":
+            args[3] = True
+
         if arg == "-help":
             print("BinBot Training software use:")
             print("-training [path]: Designate the path to the training images.")
             print("-test [path]: Designate the path to the test images.")
             print("-init: Initialize the neural network data model before training.")
+            print("-freeze: Freeze the existing model after other processes.")
             exit()
 
         last_arg = arg
 
-    if not path.exists(args[0]) or not path.exists(args[1]):
+    if not (path.exists(args[0]) or not path.exists(args[1])) and not args[3]:
         print("Not enough valid path arguments found. Terminating.")
         exit()
 
@@ -89,8 +97,7 @@ def initialize_convent(model_path, initialize):
     __model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 
     if not path.exists(model_path):
-        if __name__ == '__main__':
-            os.mkdir(model_path)
+        os.mkdir(model_path)
 
     model_file = "/model.ckpt"
 
@@ -111,6 +118,7 @@ def train_convnet(training_path, test_path, model):
     test_path: file path to the set of test images
     model: the convnet data model"""
     __training = TrainConvnet(training_path, test_path, model)
+    __training.start()
 
 
 def export_convnet(model):
@@ -118,6 +126,7 @@ def export_convnet(model):
 
     model: the convnet data model"""
     __freeze = FreezeModel(model)
+    __freeze.start()
     return __freeze.success
 
 
