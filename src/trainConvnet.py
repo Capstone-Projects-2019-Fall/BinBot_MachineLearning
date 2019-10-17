@@ -46,15 +46,15 @@ class TrainConvnet:
         self.__training_gen = self.__load_images(self.__training_path)
         self.__test_gen = self.__load_images(self.__test_path)
         history = self.__train_model(self.__model)
-        self.__display_results(self.__model, history)
+        self.__display_results(history)
 
-    def __load_images(self, path):
+    def __load_images(self, image_path):
         """This method will load the images from the designated directory for training / testing
 
         path: File path to the relevant set of images being loaded"""
         generator = ImageDataGenerator(rescale=1./255)
         data_gen = generator.flow_from_directory(batch_size=128,
-                                                 directory=path,
+                                                 directory=image_path,
                                                  shuffle=True,
                                                  target_size=(self.__image_height, self.__image_width),
                                                  class_mode='binary')
@@ -80,7 +80,7 @@ class TrainConvnet:
         )
         return history
 
-    def __display_results(self, model, history):
+    def __display_results(self, history):
         """This method will output the results of the training to the command prompt, such as the success and
         loss between training and testing the model"""
         accuracy = history.history['accuracy']

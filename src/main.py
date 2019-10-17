@@ -25,6 +25,10 @@ def main():
         train_convnet(__training_path, __test_path, __model, __image_width, __image_height)
         __model.save_weights(__model_path + __model_file)
 
+    if __freeze:
+        if export_convnet(__model):
+            print("Model frozen successfully.")
+
 
 def parse_args(argv):
     """This method parses the command line arguments from starting the application and returns them to the main
@@ -113,11 +117,12 @@ def initialize_convent(model_path, model_file, initialize, image_height, image_w
     if not path.exists(model_path):
         os.mkdir(model_path)
 
-    if path.exists(model_path + model_file) and not initialize:
-        __model.load_weights(model_path + model_file)
+    if path.exists(path.abspath(model_path + model_file)) and not initialize:
+        __model.load_weights(path.abspath(model_path + model_file))
         print("Existing model loaded.")
     else:
-        __model.save_weights(model_path + model_file)
+        __model.save(path.abspath(model_path + "/graph.pb"))
+        __model.save_weights(path.abspath(model_path + model_file))
         print("New model created and saved.")
 
     return __model
