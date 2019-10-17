@@ -18,14 +18,12 @@ def main():
     __image_width = 150
     __image_height = 150
     __model_path = path.abspath(path.dirname(path.dirname(__file__)) + "/model")
-    __model = initialize_convent(__model_path, __initialize, __image_height, __image_width)
+    __model_file = "/model.ckpt"
+    __model = initialize_convent(__model_path, __model_file, __initialize, __image_height, __image_width)
 
     if not __training_path == "" and not __test_path == "":
         train_convnet(__training_path, __test_path, __model, __image_width, __image_height)
-
-    if __freeze:
-        if export_convnet(__model):
-            print("Model frozen successfully.")
+        __model.save_weights(__model_path + __model_file)
 
 
 def parse_args(argv):
@@ -87,7 +85,7 @@ def parse_args(argv):
     return args
 
 
-def initialize_convent(model_path, initialize, image_height, image_width):
+def initialize_convent(model_path, model_file, initialize, image_height, image_width):
     """This method will load the existing convnet, or initialize it if none exists
 
     model_path: the expected file path to the existing model"""
@@ -114,8 +112,6 @@ def initialize_convent(model_path, initialize, image_height, image_width):
 
     if not path.exists(model_path):
         os.mkdir(model_path)
-
-    model_file = "/model.ckpt"
 
     if path.exists(model_path + model_file) and not initialize:
         __model.load_weights(model_path + model_file)
