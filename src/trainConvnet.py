@@ -8,6 +8,7 @@ from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.optimizers import SGD
 
 
 class TrainConvnet:
@@ -45,8 +46,10 @@ class TrainConvnet:
 
         self.__training_gen = self.__load_images(self.__training_path)
         self.__test_gen = self.__load_images(self.__test_path)
-        history = self.__train_model(self.__model)
+        history = self.__train_model()
         self.__display_results(history)
+
+        return self.__model
 
     def __load_images(self, image_path):
         """This method will load the images from the designated directory for training / testing
@@ -60,16 +63,22 @@ class TrainConvnet:
                                                  class_mode='binary')
         return data_gen
 
-    def __train_model(self, model):
+    def __train_model(self):
         """This method will operate the loop that trains the convnet on the loaded images
 
         model: the convnet data model"""
+        """
         model.compile(optimizer='adam',
                       loss='binary_crossentropy',
                       metrics=['accuracy'])
-        model.summary()
+        """
 
-        history = model.fit_generator(
+        opt = SGD(lr=0.01)
+        self.__model.compile(opt, loss='binary_crossentropy', metrics=['accuracy'])
+
+        self.__model.summary()
+
+        history = self.__model.fit_generator(
             self.__training_gen,
             steps_per_epoch=self.__training_total,
             epochs=15,

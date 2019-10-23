@@ -5,6 +5,7 @@ import tensorflow as tf
 from trainConvnet import TrainConvnet
 from freezeModel import FreezeModel
 from keras import layers, models, utils
+from keras.models import load_model
 
 
 def main():
@@ -18,15 +19,15 @@ def main():
     __image_width = 150
     __image_height = 150
     __model_path = path.abspath(path.dirname(path.dirname(__file__)) + "/model")
-    __model_file = "/model.ckpt"
+    __model_file = "/model.h5"
     __model = initialize_convent(__model_path, __model_file, __initialize, __image_height, __image_width)
 
     if not __training_path == "" and not __test_path == "":
-        train_convnet(__training_path, __test_path, __model, __image_width, __image_height)
-        __model.save_weights(__model_path + __model_file)
+        __model = train_convnet(__training_path, __test_path, __model, __image_width, __image_height)
+        __model.save(__model_path + "saved_model.h5")
 
     if __freeze:
-        if export_convnet(__model):
+        if export_convnet(__model_path, __model_file):
             print("Model frozen successfully.")
 
 
@@ -105,10 +106,12 @@ def initialize_convent(model_path, model_file, initialize, image_height, image_w
     __model = models.Sequential([
         layers.Conv2D(16, 3, padding='same', activation='relu', input_shape=(image_height, image_width, 3)),
         layers.MaxPooling2D(),
+        layers.Dropout(0.2),
         layers.Conv2D(32, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
         layers.Conv2D(64, 3, padding='same', activation='relu'),
         layers.MaxPooling2D(),
+        layers.Dropout(0.2),
         layers.Flatten(),
         layers.Dense(512, activation='relu'),
         layers.Dense(1, activation='sigmoid')
@@ -118,11 +121,10 @@ def initialize_convent(model_path, model_file, initialize, image_height, image_w
         os.mkdir(model_path)
 
     if path.exists(path.abspath(model_path + model_file)) and not initialize:
-        __model.load_weights(path.abspath(model_path + model_file))
+        __model = load_model(path.abspath(model_path + model_file), compile=False)
         print("Existing model loaded.")
     else:
-        __model.save(path.abspath(model_path + "/graph.pb"))
-        __model.save_weights(path.abspath(model_path + model_file))
+        __model.save(path.abspath(model_path + model_file))
         print("New model created and saved.")
 
     return __model
@@ -135,14 +137,15 @@ def train_convnet(training_path, test_path, model, image_width, image_height):
     test_path: file path to the set of test images
     model: the convnet data model"""
     __training = TrainConvnet(training_path, test_path, model, image_width, image_height)
-    __training.start()
+    __model = __training.start()
+    return __model
 
 
-def export_convnet(model):
+def export_convnet(model_path, model_file, graph_file):
     """This method will export the model to a file by calling the FreezeModel class
 
     model: the convnet data model"""
-    __freeze = FreezeModel(model)
+    __freeze = FreezeModel(model_path, model_file, graph_file)
     __freeze.start()
     return __freeze.success
 
