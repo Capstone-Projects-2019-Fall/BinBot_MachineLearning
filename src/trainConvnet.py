@@ -31,9 +31,6 @@ class TrainConvnet:
 
     def start(self):
         """This method will be called externally by main to begin training the model"""
-        training_list = os.listdir(self.__training_path)
-        self.__training_classes = len(training_list)
-
         self.__training_images = self.__load_images(self.__training_path)
         self.__training_boxes, self.__training_classes = self.__load_bounding_boxes(self.__training_path)
         print("Training total = " + str(len(self.__training_images)))
@@ -49,6 +46,26 @@ class TrainConvnet:
         history = self.__train_model(x_train, x_test, y_train, y_test)
         self.__display_results(history)
 
+        target_boxes = y_test * self.__image_height
+        pred = self.__model.predict( x_test )
+        pred_boxes = pred[ ... , 0 : 4 ] * self.__image_height
+        pred_classes = pred[ ... , 4 : ]
+        iou_scores = self.__calculate_iou( target_boxes , pred_boxes )
+
+        print( 'Class Accuracy is {} %'.format( self.__calculate_class_accuracy( y_test[ ... , 4 : ] , pred_classes ) * 100 ))
+
+        boxes = self.__model.predict( x_test )
+        for i in range( boxes.shape[0] ):
+            b = boxes[ i , 0 : 4 ] * self.__image_height
+            img = x_test[i] * 255
+            source_img = Image.fromarray( img.astype( np.uint8 ) , 'RGB' )
+            source_img = source_img.resize((2992, 2000))
+            draw = ImageDraw.Draw( source_img )
+            draw.rectangle( b , outline="red" )
+            if not os.path.exists("inference_images"):
+                os.mkdir("inference_images")
+            source_img.save( 'inference_images/image_{}.png'.format( i + 1 ) , 'png' )
+
         return self.__model
 
     def __load_images(self, image_path):
@@ -63,7 +80,7 @@ class TrainConvnet:
 
             for image_file in image_paths:
                 image = Image.open(image_file).resize((self.__image_width, self.__image_height))
-                image = np.asarray(image)
+                image = np.asarray(image) / 255.0
                 images.append(image)
 
         return images
@@ -102,7 +119,7 @@ class TrainConvnet:
 
         self.__model.compile(
             optimizer=Adam(lr=0.0001),
-            loss=self._calculate_loss,
+            loss=self.__calculate_loss,
             metrics=[self.__calculate_iou]
         )
 
@@ -129,10 +146,15 @@ class TrainConvnet:
         iou = inter_area / (box_a_area + box_b_area - inter_area)
         return iou
 
-    def _calculate_loss(self, y_true, y_predicted):
+    def __calculate_loss(self, y_true, y_predicted):
         mse = tf.losses.mean_squared_error(y_true, y_predicted)
         iou = self.__calculate_iou(y_true, y_predicted)
         return mse + (1-iou)
+
+    def __calculate_class_accuracy(self, target_classes, predicted_classes):
+        target_classes = np.argmax(target_classes, axis=1)
+        predicted_classes = np.argmax(predicted_classes, axis=1)
+        return (target_classes == predicted_classes).mean()
 
     def __display_results(self, history):
         """This method will output the results of the training to the command prompt, such as the success and

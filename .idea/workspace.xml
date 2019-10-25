@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="76812b6f-869a-40fe-a1f1-5d93b58689b1" name="Default Changelist" comment="Various bug fixes. Freezing functionality removed to be re-worked.">
+    <list default="true" id="76812b6f-869a-40fe-a1f1-5d93b58689b1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/trainConvnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainConvnet.py" afterDir="false" />
@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="75" column="32" lean-forward="true" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="32" />
+            <state relative-caret-position="1224">
+              <caret line="72" column="17" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="17" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -42,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/trainConvnet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+            <state relative-caret-position="240">
+              <caret line="54" column="13" selection-start-line="54" selection-start-column="8" selection-end-line="54" selection-end-column="13" />
               <folding>
                 <element signature="e#0#82#0" expanded="true" />
               </folding>
@@ -54,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/freezeModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+            <state relative-caret-position="323">
+              <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -75,36 +75,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>-init</find>
-      <find>__load</find>
-      <find>path</find>
-      <find>display</find>
-      <find>.pb</find>
-      <find>initialize_con</find>
-      <find>save_W</find>
-      <find>.compl</find>
-      <find>abs</find>
-      <find>write_graph</find>
-      <find>pbtxt</find>
-      <find>__graph</find>
-      <find>__grap</find>
-      <find>graph_f</find>
-      <find>graph_file</find>
-      <find>.save</find>
-      <find>train_mode</find>
-      <find>model.com</find>
-      <find>width</find>
-      <find>load_imm</find>
-      <find>256</find>
-      <find>fit_tr</find>
       <find>.comp</find>
-      <find>compile</find>
       <find>maximum</find>
       <find>iou</find>
       <find>os.</find>
       <find>export</find>
       <find>test</find>
       <find>train_</find>
+      <find>or</find>
+      <find>or</find>
+      <find>arguments</find>
+      <find>model.h5</find>
+      <find>input_weights</find>
+      <find>compile</find>
+      <find>x_train</find>
+      <find>os</find>
+      <find>mkdir</find>
+      <find>png</find>
+      <find>np.as</find>
+      <find>300</find>
+      <find>calcula</find>
+      <find>calculate_loss</find>
+      <find>argmax</find>
+      <find>mean</find>
+      <find>nump.</find>
+      <find>epoch</find>
+      <find>10010</find>
+      <find>print(&quot;Bp</find>
+      <find>resize</find>
+      <find>10</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -124,8 +124,8 @@
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/src/freezeModel.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
-        <option value="$PROJECT_DIR$/src/trainConvnet.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/src/trainConvnet.py" />
       </list>
     </option>
   </component>
@@ -165,7 +165,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../keras_to_OpenCV_tensorflow" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -250,7 +250,7 @@
       <workItem from="1571142789756" duration="17924000" />
       <workItem from="1571333682897" duration="9094000" />
       <workItem from="1571409673558" duration="1762000" />
-      <workItem from="1571663718706" duration="32493000" />
+      <workItem from="1571663718706" duration="47408000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1570988366994</created>
@@ -308,7 +308,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571839293722</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Modified training and functionality for bounding box regression.">
+      <created>1571950720348</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1571950720348</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -320,7 +327,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71464000" />
+    <option name="totallyTimeSpent" value="86379000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -335,8 +342,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -370,7 +377,8 @@
     <MESSAGE value="Update / fix to model file initialization and saving." />
     <MESSAGE value="Further saving fixes for model freezing compatibility." />
     <MESSAGE value="Various bug fixes. Freezing functionality removed to be re-worked." />
-    <option name="LAST_COMMIT_MESSAGE" value="Various bug fixes. Freezing functionality removed to be re-worked." />
+    <MESSAGE value="Modified training and functionality for bounding box regression." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified training and functionality for bounding box regression." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/binbot_machine_learning$main.coverage" NAME="main Coverage Results" MODIFIED="1571321835993" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -388,8 +396,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/freezeModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+        <state relative-caret-position="323">
+          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -398,8 +406,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/trainConvnet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+        <state relative-caret-position="240">
+          <caret line="54" column="13" selection-start-line="54" selection-start-column="8" selection-end-line="54" selection-end-column="13" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
           </folding>
@@ -408,8 +416,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="75" column="32" lean-forward="true" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="32" />
+        <state relative-caret-position="1224">
+          <caret line="72" column="17" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="17" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

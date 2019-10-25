@@ -1,5 +1,6 @@
 import sys
 import os
+import tensorflow as tf
 from os import path
 from tensorflow import keras
 from trainConvnet import TrainConvnet
@@ -15,15 +16,19 @@ def main():
     __training_path = args[0]
     __initialize = args[1]
     __freeze = args[2]
-    __image_width = 150
-    __image_height = 150
+    __image_width = 300
+    __image_height = 300
     __model_path = path.abspath(path.dirname(path.dirname(__file__)) + "/model")
     __model_file = "/model.h5"
     __model = initialize_convent(__model_path, __model_file, __initialize, __image_height, __image_width, __training_path)
 
     if not __training_path == "":
         __model = train_convnet(__training_path, __model, __image_width, __image_height)
-        __model.save(__model_path + "saved_model.h5")
+        __model.save(__model_path + "/" + __model_file)
+        __model.save_weights(__model_path + "/saved_weights.h5")
+        model_json = __model.to_json()
+        with open(__model_path + '/keras_model.json', "w") as json_file:
+            json_file.write(model_json)
 
     if __freeze:
         if export_convnet(__model_path, __model_file):
@@ -73,7 +78,7 @@ def parse_args(argv):
 
         last_arg = arg
 
-    if not (path.exists(args[0])) and not args[3]:
+    if not (path.exists(args[0])) and not args[2]:
         print("Not enough valid path arguments found. Terminating.")
         exit()
 
